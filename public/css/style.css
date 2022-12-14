@@ -1,0 +1,36 @@
+*{
+    box-sizing: border-box;
+}
+
+.container {
+    margin: auto;
+    width: 50%;
+}
+
+.container>h2{
+    text-align: center;
+}
+
+#formTasks {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}
+.task {
+    padding: 5px;
+    margin: 20px 0;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    background-color:antiquewhite;
+}
+
+.task:hover{
+    background-color: bisque;
+}
+
+.inputs li{
+    list-style: none;
+    margin: 15px 0;
+}
+
