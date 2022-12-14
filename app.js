@@ -19,7 +19,7 @@ app.use(static(__dirname + '/public'));
 // })
 
 app.get('/', (req, res) => {
-    res.render('index', {name: 'Anna', length: 5});
+    res.render('index', {name: 'Anna', length: 5, tasks: tasksArray});
 })
 
 app.route('/tasks')
@@ -30,9 +30,9 @@ app.route('/tasks')
         text: req.body.newTask,
         completed: false
     }
-    tasks.push(newTask);
-    res.send(tasks)
-    //res.redirect("/")
+    tasksArray.push(newTask);
+    //res.send(tasksArray)
+    res.redirect("/")
 })
 
 
@@ -43,7 +43,7 @@ app.listen({path: hostname, port: port} , (err) => {
 
 let user;
 
-let tasks = [
+let tasksArray = [
     {
         id: 1,
         text: 'coding',

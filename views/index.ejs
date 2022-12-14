@@ -7,12 +7,12 @@
     <title>ToDoList</title>
 </head>
 <body>
-    <h2>Hello! You are in the index file!</h2>
+    <!--<h2>Hello! You are in the index file!</h2>
     <h3><%=name %>, you created me!</h3>
     <h3> </h3>
     <% for(let i=0; i<length; i++){ %>
         <p> I will repeat this <%=length %> times!</p>
-    <% } %>
+    <% } %>-->
 
     <div class="container">
         <h2>A Simple To Do List App</h2>
@@ -20,6 +20,12 @@
             <input type="text" name="newTask" placeholder="add a new task">
             <button type="submit">Add task</button>
         </form>
+
+        <div class="tasks">
+            <% for(let i=0; i<tasks.length; i++){ %>
+                <p> <%=tasks[i].text %></p>
+            <% } %>
+        </div>
     </div>
 </body>
 </html>
