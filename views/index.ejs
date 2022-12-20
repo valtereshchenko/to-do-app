@@ -19,28 +19,32 @@
         <div>
             
             <% for(let i=0; i<tasks.length; i++){ %>
-                <div class="task"><span><input type= checkbox value=<%=tasks[i].text %>><%=tasks[i].text %> </span><input class= delete type="button" value= 'Delete' id='<%=tasks[i].id %>'></div>
+                <div class="task">
+                    <span>
+                        <input type= checkbox value=<%=tasks[i].text %>><%=tasks[i].text %> 
+                    </span>
+                    <input type="button" class= delete value= 'Delete' id='<%=tasks[i].id %>'>
+                </div>
             <% } %>
             
         </div>
     </div>
     <script>
-        console.log('script')
         let btns = document.querySelectorAll('.delete');
         for (let btn of btns){
             btn.addEventListener('click', deleteTask)
-
         }
         function deleteTask(){
-            console.log(this.id)
-            //preventDefault();
+            //console.log(this.id)
             fetch(`http://localhost:3000/tasks/${this.id}`, 
             {method: 'DELETE'})
             .then(response => response.json())
-            .then(data => window.location = data.redirect_path)
-            
+            .then(data => {
+                if(data.success){
+                    window.location = data.redirect_path
+                }
+            })
         }
-        
         
     </script>
 </body>
