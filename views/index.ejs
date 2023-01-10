@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,40 +11,67 @@
     
     <div class="container">
         <h2>A Simple To Do List App</h2>
-        <form action="http://localhost:3000/tasks" method="post" id="formTasks">
+        <form action="http://localhost:3001/tasks" method="post" id="formTasks">
             <input type="text" name="newTask" placeholder="add a new task">
             <button type="submit">Add task</button>
         </form>
 
-        <div>
+        <div id="tasks">
             
-            <% for(let i=0; i<tasks.length; i++){ %>
-                <div class="task">
-                    <span>
-                        <input type= checkbox value=<%=tasks[i].text %>><%=tasks[i].text %> 
-                    </span>
-                    <input type="button" class= delete value= 'Delete' id='<%=tasks[i].id %>'>
-                </div>
-            <% } %>
-            
+                <ul>
+                  <% for (let i = 0; i < task.length; i++) { %>
+                    <div class="task">
+                        <span>
+                            <input type= checkbox value=<%=task[i]._id %>><%=task[i].text %> 
+                        </span>
+                    
+                    </div>
+                  <%}%>
+        </div>
+
+        <div id="buttons">
+            <button onclick=deleteTask()>Delete Task</button>
+            <button onclick=deleteAllTasks()>Delete All</button>
         </div>
     </div>
     <script>
-        let btns = document.querySelectorAll('.delete');
-        for (let btn of btns){
-            btn.addEventListener('click', deleteTask)
-        }
         function deleteTask(){
-            //console.log(this.id)
-            fetch(`http://localhost:3000/tasks/${this.id}`, 
-            {method: 'DELETE'})
+            
+            let selectedTasks = document.querySelectorAll('input[type=checkbox]:checked');
+            let tasksToDelete = []
+            for (task of selectedTasks){
+                tasksToDelete.push(task.value)
+            }
+            
+            console.log(tasksToDelete)
+
+            fetch(`/tasks`, {
+            method: "DELETE",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({ids: tasksToDelete})})
             .then(response => response.json())
             .then(data => {
                 if(data.success){
-                    window.location = data.redirect_path
+                    window.location.reload();
                 }
             })
         }
+
+        function deleteAllTasks(){
+            
+            fetch('/tasks/deleteAll', {
+            method: "DELETE"})
+            .then(response => response.json())
+            .then(data => {
+                if(data.success){
+                    window.location.reload();
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        }
+        
         
     </script>
 </body>

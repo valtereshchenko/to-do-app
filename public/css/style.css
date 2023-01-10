@@ -4,12 +4,49 @@
 
 .container {
     margin: auto;
-    width: 50%;
+    padding: 6% 0;
+    width: 60%;
     max-width: 400px;
+    background-color: blanchedalmond;
 }
 
 .container>h2{
     text-align: center;
+}
+
+#login{
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+}
+
+#login input[type=submit]{
+    width: 40%;
+    height: 2rem;
+    margin: 0 auto;
+    border-radius: 12px;
+}
+
+#login li{
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    padding-right: 40px;
+}
+#users{
+    margin: 20px auto;
+    width: 60%;
+    background-color: bisque;
+    border-collapse:collapse;
+}
+#users th{
+    padding:10px;
+    font-size: 1rem;
+    border-bottom: 1px solid saddlebrown;
+}
+#users td{
+    text-align: center;
+    padding:5px;
 }
 
 #formTasks {
@@ -37,5 +74,17 @@
 
 input[type=checkbox]{
     margin-right: 8px;
+}
+
+#buttons {
+    width: 70%;
+    
+    margin: 0 auto;
+    text-align: center;
+}
+
+#buttons button{
+    height: 2rem;
+    font-size: 1rem;
 }
 

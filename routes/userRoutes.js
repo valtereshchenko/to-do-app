@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/userControllers')
+const userController = require('../controllers/userControllers');
 const bodyParser = require('body-parser');
-const urlencodedParser = bodyParser.urlencoded({ extended: false })
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-router.get('/', userController.getLoginPage)
-router.post('/', urlencodedParser, userController.sendDataLogin)
-
+router.get('/', userController.getUsers);
+router.post('/', urlencodedParser, userController.createUser);
+router.get('/:name', urlencodedParser, userController.getUserByName);
+router.delete('/:name', userController.deleteUser)
 
 module.exports = router;
