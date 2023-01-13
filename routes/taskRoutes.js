@@ -13,7 +13,7 @@ router.post('/', urlencodedParser, taskController.createNewTask);
 
 router.get('/', taskController.getTasks);
 
-router.get('/:id', taskController.getTask);
+//router.get('/:id', taskController.getTask);
 
 router.delete('/', taskController.deleteTask); 
 

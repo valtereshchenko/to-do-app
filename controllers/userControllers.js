@@ -12,8 +12,9 @@ async function getUsers(req, res) {
 
 async function getUserByName(req,res){
     const user = await userModel.findOne({name: req.params.name});
-    user.parent = "63bd3930e94237ab282fb0ca";
-    await user.save();
+    console.log(user)
+    //user.parent = "63bd3930e94237ab282fb0ca";
+    //await user.save();
     res.send(user)
 }
 
@@ -48,8 +49,9 @@ async function createUser(req, res){
         res.redirect('/')
     } 
     catch(error){
-        console.log(error)
-        res.redirect('/')
+        console.log(error.message);
+        res.sendStatus(404);
+        //res.redirect('/')
         return
     }
     

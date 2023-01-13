@@ -47,12 +47,12 @@ async function getTasks(req, res){
     
 }
 
-function getTask(req, res){
-    let databaseTasksJSON = fs.readFileSync('./public/storage.json', 'utf8')
-    let tasksJSON = JSON.parse(databaseTasksJSON)
-    let task = tasksJSON.filter(element => element.id === req.params.id)
-    res.end(JSON.stringify(task));
-}
+// function getTask(req, res){
+//     let databaseTasksJSON = fs.readFileSync('./public/storage.json', 'utf8')
+//     let tasksJSON = JSON.parse(databaseTasksJSON)
+//     let task = tasksJSON.filter(element => element.id === req.params.id)
+//     res.end(JSON.stringify(task));
+// }
 
 //task controller function
 async function deleteTask(req, res) {
@@ -76,7 +76,6 @@ async function deleteTask(req, res) {
     // }
     try{
 
-       
         const tasksToDelete = req.body.ids
         if (tasksToDelete.length > 1){
             for (task of tasksToDelete){
@@ -113,4 +112,4 @@ async function deleteAllTasks(req, res){
     };
 }
 
-module.exports = {createNewTask, getTasks, getTask, deleteTask, deleteAllTasks};
+module.exports = {createNewTask, getTasks, deleteTask, deleteAllTasks};

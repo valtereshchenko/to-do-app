@@ -10,6 +10,7 @@
     background-color: blanchedalmond;
 }
 
+
 .container>h2{
     text-align: center;
 }
@@ -18,6 +19,31 @@
     display: flex;
     flex-flow: column;
     justify-content: space-between;
+}
+
+.button{
+    padding:10px;
+    text-decoration: none;
+    background-color: aliceblue;
+    border-radius: 12px;
+
+}
+
+.button:hover{
+    
+    background-color: cadetblue;
+}
+
+.home {
+    margin: auto;
+    padding: 6% 0;
+    width: 60%;
+    max-width: 400px;
+    background-color: blanchedalmond;
+    display: flex;
+    flex-flow: row;
+    gap: 30px;
+    justify-content: center;
 }
 
 #login input[type=submit]{
@@ -52,7 +78,7 @@
 #formTasks {
     display: flex;
     flex-flow: row;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 .task {
     padding: 5px;
@@ -60,11 +86,12 @@
     display: flex;
     flex-flow: row;
     justify-content: space-between;
-    background-color:antiquewhite;
+    background-color:aliceblue;
+    margin-right: 45px;
 }
 
 .task:hover{
-    background-color: bisque;
+    background-color:cadetblue;
 }
 
 .inputs li{

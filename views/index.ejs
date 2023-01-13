@@ -33,6 +33,9 @@
             <button onclick=deleteTask()>Delete Task</button>
             <button onclick=deleteAllTasks()>Delete All</button>
         </div>
+        <form action="/auth/logout?_method=DELETE" method="POST">
+            <button type="submit">Log Out</button>
+        </form>
     </div>
     <script>
         function deleteTask(){
