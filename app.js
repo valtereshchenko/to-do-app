@@ -60,12 +60,13 @@ app.use(passport.session())
 app.use('/tasks', taskRoutes);
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
-app.use(handleErrors)
+
 
 app.get('/', (req, res) => {
     res.sendFile('index.html');
 })
 
+app.use(handleErrors);
 //to connect to the mongoose db
 mongoose.connect(process.env.DB_SERVER, {useNewUrlParser:true})
 .then(() => {
@@ -80,5 +81,3 @@ mongoose.connect(process.env.DB_SERVER, {useNewUrlParser:true})
 })
 .catch(err =>{
   console.error(err.message)})
-
-

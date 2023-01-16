@@ -21,7 +21,6 @@ const { BadRequest, NotFound } = require('../utils/errors');
 initializePassport(passport);
 
 
-
   router.get('/login', checkNotAuthenticated, (req, res) => {// if the user is logged in, he/she shouldn't be able to see login page
     res.render('login.ejs');
   })
@@ -50,14 +49,15 @@ initializePassport(passport);
     res.render('register.ejs');
   })
 
-  router.post('/register',urlencodedParser, async(req, res) =>{
-   const {name, email, password} = req.body
-   if(!name || !email || !password){
+  router.post('/register',urlencodedParser, async(req, res, next) =>{
+   const {name, email, password} = req.body;
+
+   try{
+    if(!name || !email || !password){
      throw new BadRequest('Missing field name, email or password')
    }
-   try{
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    
+
     const user = await User.create({
         name: req.body.name,
         email: req.body.email,
@@ -65,12 +65,13 @@ initializePassport(passport);
     });
 
       // register and redirect to login
-      
+
       //res.send(user)
       res.redirect('/auth/login')
     }
     catch(err){
-      console.log(err);
+      // console.log(err);
+      next(err)
       //res.redirect('/')
     }
   })
@@ -78,7 +79,7 @@ initializePassport(passport);
   router.delete('/logout', (req, res, next) => { //delete the session id
     //req.logOut();
 
-    
+
     req.logout(function(err) {
       if (err) { return next(err); }
       res.clearCookie("connect.sid", {path: "/"})
@@ -91,8 +92,8 @@ initializePassport(passport);
       //res.redirect('/');
     });
     //logged out and redirect to login
-    
-    
+
+
   })
 
 
