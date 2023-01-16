@@ -13,6 +13,7 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false })
 app.use(express.json());
 app.set('view engine', 'ejs')
 app.use(static(__dirname + '/public'));
+const { BadRequest, NotFound } = require('../utils/errors');
 
 
 
@@ -25,25 +26,43 @@ initializePassport(passport);
     res.render('login.ejs');
   })
 
-  router.post('/login', urlencodedParser, checkNotAuthenticated, passport.authenticate('local', {
-    successRedirect: '/tasks',
-    failureRedirect: '/auth/login',
-    failureFlash: true
-  }))
+  router.post('/login', checkNotAuthenticated, urlencodedParser, async (req, res) =>{
+    const {email, password} = req.body
+
+    const emailDB = await User.findOne({'email': email})
+    const passDB = await User.findOne({'password': await bcrypt.hash(password, 10)})
+    if (!emailDB || !passDB) {
+      throw new NotFound("Email or password missing");
+    }
+    try{
+    passport.authenticate('local', {
+      successRedirect: '/',
+      failureRedirect: '/login',
+      failureFlash: true
+    })
+  }
+  catch(err){
+    console.log(err);
+  }
+  })
 
   router.get('/register', checkNotAuthenticated, (req, res) => {// if the user is logged in, he/she shouldn't be able to see login page
     res.render('register.ejs');
   })
 
   router.post('/register',urlencodedParser, async(req, res) =>{
-   
+   const {name, email, password} = req.body
+   if(!name || !email || !password){
+     throw new BadRequest('Missing field name, email or password')
+   }
+   try{
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    try{
-      const user = await User.create({
+    
+    const user = await User.create({
         name: req.body.name,
         email: req.body.email,
         password: hashedPassword
-      });
+    });
 
       // register and redirect to login
       

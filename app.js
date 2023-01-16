@@ -12,6 +12,7 @@ var LocalStrategy = require('passport-local');
 const flash = require('express-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
+const handleErrors = require('./middleware/handleErrors')
 
 dotenv.config();
 const hostname = 'localhost';
@@ -59,6 +60,7 @@ app.use(passport.session())
 app.use('/tasks', taskRoutes);
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
+app.use(handleErrors)
 
 app.get('/', (req, res) => {
     res.sendFile('index.html');
