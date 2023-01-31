@@ -15,22 +15,48 @@ export const ToDoList =({tasks}:TasksProps)=> {
 
   // fetch some data from the backend
   React.useEffect(() => {
-    console.log('we are in the Use Effect')
     let itemsFromServer;
     fetch('/tasks')
-    .then((res)=> res.json()) //res.json
+    .then((res)=> res.json()) //should be set to res.json(tasks) in the taskControllers/getTasks
     .then((fetchedItems)=> { //this is an array of object so we should do a map
       console.log('fetched items', fetchedItems)
       itemsFromServer = fetchedItems.map((item:any)=>{
-        const {id:id, name:name}=item;//destructuring the item, at the same time we can chagnge the names of the fields 
+        const {_id:id, name:name}=item;//destructuring the item, at the same time we can chagnge the names of the fields 
         return {id, name}
       })
       setTaskItems(itemsFromServer)
     })
   },[]) //call the callback func only once
 
-  function deleteTask (myIndex:number) {
-    const newList = tasksList.filter((item, index) => index!== myIndex) // leave all the items besides the one with myIndex
+  function fetchItemsFromServer (){
+    let itemsFromServer;
+    fetch('/tasks')
+    .then((res) => res.json())
+    .then((fetchedItems)=> {
+      itemsFromServer = fetchedItems.map((item:any) => {
+        const {_id:id, name} = item;
+        return {id, name}
+      })
+      setTaskItems(itemsFromServer)
+    })
+  }
+
+
+  function deleteTask (itemId:number) {
+
+    const requestObject = {
+      method:'DELETE',
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({_id:itemId}),
+    };
+    // fetch('/tasks/remove', requestOptions)
+    // .then((response) => response.json())
+    // .then((data) => {
+    //   console.log(data);
+    //   fetchItemsFromServer();
+    // });
+
+    const newList = tasksList.filter((item) => item.id !== itemId) // leave all the items besides the one with myIndex
     console.log('New List', newList)
     setTaskItems(newList);
     }
@@ -38,14 +64,22 @@ export const ToDoList =({tasks}:TasksProps)=> {
   function createTask(event:any) {
     event.preventDefault(); //prevents from re-loading the page
     let newTask = {id:tasksList.length +1, name: value, checked: false}
+
+    // post newly types tasks to the DB
     fetch("/tasks", {
-      method: "POST",
+      method: "POST", 
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ name: value, checked: false }),
     }) //add new items to the DB 
+    .then((res)=> res.json())
+    .then((data)=> {
+      console.log(data)
+    })
+    .catch((e)=> console.log(e))
+
     const newList = [...tasksList, newTask] //adds new item to the list and saves in the new variable 
     setTaskItems(newList)
     setValue(''); 
@@ -71,7 +105,7 @@ export const ToDoList =({tasks}:TasksProps)=> {
           <li className='taskListItem' key={task.id}> 
           <span className={task.checked? "done" :"todo"}>{task.name}</span>
           <input className='checkbox' type='checkbox' onChange={(e) => {handleChange(e,index);}}></input>
-          <button className='Button-delete' onClick={()=> deleteTask(index)}>Delete Task</button>
+          <button className='Button-delete' onClick={()=> deleteTask(task.id)}>Delete Task</button>
           </li>
           )
         }

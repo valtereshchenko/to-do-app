@@ -4,32 +4,13 @@ const path = require("path");
 const taskModel = require("../models/taskModel");
 const { json } = require("body-parser");
 
-// function createNewTask (req,res) {
-//     let newTask = {
-//         id: uuidv4(),
-//         text: req.body.newTask,
-//         completed: false
-//     }
-
-//     let databaseTasksJSON = fs.readFileSync('./public/storage.json')
-//     let tasksJSON = JSON.parse(databaseTasksJSON)
-//     tasksJSON.push(newTask);
-
-//     fs.writeFile('./public/storage.json', JSON.stringify(tasksJSON, null, 2), (err) => {
-//         if(err){
-//             console.log('Error'+ err)
-//         }
-//     })
-//     res.redirect('/tasks');
-// }
-
 async function createNewTask(req, res) {
-  const task = await taskModel.create({
-    text: req.body.newTask,
-    completed: false,
+  const newTask = await taskModel.create({
+    name: req.body.name,
+    checked: req.body.checked,
   });
-
-  res.redirect("/tasks");
+  //res.redirect("/tasks");
+  res.json(newTask);
 }
 
 // function getTasks(req, res){
