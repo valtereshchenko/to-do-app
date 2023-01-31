@@ -28,33 +28,34 @@ export const ToDoList =({tasks}:TasksProps)=> {
     })
   },[]) //call the callback func only once
 
+
   function fetchItemsFromServer (){
-    let itemsFromServer;
+    let tasksFromServer;
     fetch('/tasks')
     .then((res) => res.json())
     .then((fetchedItems)=> {
-      itemsFromServer = fetchedItems.map((item:any) => {
+      tasksFromServer = fetchedItems.map((item:any) => {
         const {_id:id, name} = item;
         return {id, name}
       })
-      setTaskItems(itemsFromServer)
+      setTaskItems(tasksFromServer)
     })
   }
 
 
   function deleteTask (itemId:number) {
 
-    const requestObject = {
+    const requestOptions = {
       method:'DELETE',
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({_id:itemId}),
     };
-    // fetch('/tasks/remove', requestOptions)
-    // .then((response) => response.json())
-    // .then((data) => {
-    //   console.log(data);
-    //   fetchItemsFromServer();
-    // });
+    fetch('/tasks', requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        fetchItemsFromServer();
+    });
 
     const newList = tasksList.filter((item) => item.id !== itemId) // leave all the items besides the one with myIndex
     console.log('New List', newList)

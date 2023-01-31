@@ -13,53 +13,21 @@ async function createNewTask(req, res) {
   res.json(newTask);
 }
 
-// function getTasks(req, res){
-//     let databaseTasksJSON = fs.readFileSync('./public/storage.json', 'utf8')
-//     let tasksJSON = JSON.parse(databaseTasksJSON)
-//     res.render('index', {tasks: tasksJSON});
-// }
-
 async function getTasks(req, res) {
   const tasks = await taskModel.find({});
   //res.send(tasks)
   res.json(tasks);
 }
 
-// function getTask(req, res){
-//     let databaseTasksJSON = fs.readFileSync('./public/storage.json', 'utf8')
-//     let tasksJSON = JSON.parse(databaseTasksJSON)
-//     let task = tasksJSON.filter(element => element.id === req.params.id)
-//     res.end(JSON.stringify(task));
-// }
-
-//task controller function
 async function deleteTask(req, res) {
-  // let databaseTasksJSON = fs.readFileSync('./public/storage.json', 'utf8');
-  // let tasksJSON = JSON.parse(databaseTasksJSON);
-  // let found = tasksJSON.findIndex(element => element.id === req.params.id ? element: null);
-  // if (found !== null) {
-  //     tasksJSON.splice(found,1);
-  //     fs.writeFile('./public/storage.json', JSON.stringify(tasksJSON, null, 2), (err) => {
-  //         if(err) console.log('Error'+ err)
-  //     })
-  //     res.json({
-  //         success: true,
-  //         redirect_path: "/tasks",
-  //     })
-
-  // } else {
-  //     res.json({
-  //         success: false
-  //     })
-  // }
   try {
-    const tasksToDelete = req.body.ids;
+    const tasksToDelete = Object.keys(req.body).length; //req.body.ids;
     if (tasksToDelete.length > 1) {
       for (task of tasksToDelete) {
         await taskModel.deleteOne({ _id: task });
       }
     } else {
-      await taskModel.deleteOne({ _id: tasksToDelete[0] });
+      await taskModel.deleteOne({ _id: req.body._id });
     }
 
     res.json({
