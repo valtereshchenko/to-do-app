@@ -18,14 +18,11 @@ export const ToDoList =({tasks}:TasksProps)=> {
     console.log('we are in the Use Effect')
     let itemsFromServer;
     fetch('/tasks')
-    .then((res)=> {
-      console.log(res)
-      return res.json()
-    })//res.json())
+    .then((res)=> res.json()) //res.json
     .then((fetchedItems)=> { //this is an array of object so we should do a map
       console.log('fetched items', fetchedItems)
       itemsFromServer = fetchedItems.map((item:any)=>{
-        const {_id:id, title:name}=item;//destructuring the item, at the same time we can chagnge the names of the fields 
+        const {id:id, name:name}=item;//destructuring the item, at the same time we can chagnge the names of the fields 
         return {id, name}
       })
       setTaskItems(itemsFromServer)
