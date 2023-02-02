@@ -1,0 +1,9 @@
+
+.container{
+  min-width: 400px;
+  display: grid;
+  border: 5px solid #212227;
+  border-radius: 10px;
+  text-align: center;
+  background-color: white;
+}

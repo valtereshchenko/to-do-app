@@ -1,0 +1,24 @@
+.fixed-header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  background-color: blueviolet;
+}
+.header-item {
+  list-style-type: none;
+  float: left;
+}
+.header-item a {
+  display: block;
+  text-decoration: none;
+  padding: 15px;
+}
+
+.header-item a:hover {
+  background-color: azure;
+}
+
+.header-item a .active {
+  background-color: azure;
+}

@@ -80,6 +80,17 @@
   font-weight: bold;
 }
 
+.neutral-button {
+  border: none;
+  border-radius: 7px;
+  padding: 10px;
+  margin: 10px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background: white(209, 245, 243);
+  height: 35px;
+  font-weight: bold;
+}
+
 .list {
   background: rgba(0, 0, 0, 0.076);
   padding: 15px;
