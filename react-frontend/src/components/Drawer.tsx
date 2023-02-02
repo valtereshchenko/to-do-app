@@ -7,6 +7,7 @@ import {
   ListItemIcon,
   ListItemButton,
   ListItem,
+  Divider,
 } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import AddTaskIcon from "@mui/icons-material/AddTask";
@@ -17,7 +18,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 export default function Drawer() {
   const navigate = useNavigate();
   const listItems = [
-    { text: "Home", icon: <HomeIcon />, onClick: () => navigate("/") },
+    { text: "Home", icon: <HomeIcon />, onClick: () => navigate("/home") },
     {
       text: "Task Lisk",
       icon: <AddTaskIcon />,
@@ -29,6 +30,9 @@ export default function Drawer() {
       icon: <AppRegistrationIcon />,
       onClick: () => navigate("/register"),
     },
+  ];
+
+  const secondListItem = [
     {
       text: "Logout",
       icon: <LogoutIcon />,
@@ -47,6 +51,17 @@ export default function Drawer() {
             </ListItemButton>
           </ListItem>
         ))}
+        <Divider />
+        <ListItem
+          key={secondListItem[0].text}
+          disablePadding
+          onClick={secondListItem[0].onClick}
+        >
+          <ListItemButton>
+            <ListItemIcon>{secondListItem[0].icon}</ListItemIcon>
+            <ListItemText primary={secondListItem[0].text}></ListItemText>
+          </ListItemButton>
+        </ListItem>
       </List>
     </MUIDrawer>
   );

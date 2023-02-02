@@ -1,14 +1,15 @@
 import React from "react";
 import "./App.css";
 import { Container } from "./components/Container";
-import { ToDoList } from "./components/Tasks";
+import { ToDoList } from "./pages/Tasks";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
-import Login from "./components/Login";
-import { Register } from "./components/Register";
-import { NotFound } from "./components/NotFound";
-import { Home } from "./components/Home";
+import Login from "./pages/Login";
+import { Register } from "./pages/Register";
+import { NotFound } from "./pages/NotFound";
+import Home from "./pages/Home";
 import Drawer from "./components/Drawer";
+import LoginMUI from "./pages/LoginMUI";
 
 function App() {
   let todos = [
@@ -19,27 +20,26 @@ function App() {
 
   return (
     <div className="app">
-      <Router>
-        <Header></Header>
-        {/* <Drawer></Drawer> */}
-        <Container styles={{ margin: "2rem", textAlign: "center" }}>
-          {/* <ToDoList tasks={todos}></ToDoList> */}
+      <Container styles={{ margin: "2rem", textAlign: "center" }}>
+        <Router>
+          {/* <Header></Header> */}
+          <Drawer></Drawer>
           <Routes>
-            <Route path="/" element={<Home></Home>}></Route>
             <Route
               path="/"
               element={<ToDoList tasks={todos}></ToDoList>}
             ></Route>
+            <Route path="/home" element={<Home></Home>}></Route>
             <Route
               path="/tasks"
               element={<ToDoList tasks={todos}></ToDoList>}
             ></Route>
-            <Route path="/login" element={<Login></Login>}></Route>
+            <Route path="/login" element={<LoginMUI></LoginMUI>}></Route>
             <Route path="/register" element={<Register></Register>}></Route>
             <Route path="*" element={<NotFound></NotFound>}></Route>
           </Routes>
-        </Container>
-      </Router>
+        </Router>
+      </Container>
     </div>
   );
 }

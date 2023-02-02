@@ -9,7 +9,7 @@ export default function Header() {
         <ul className="fixed-header">
           <li className="header-item">
             <NavLink
-              to="/tasks"
+              to="/home"
               className={({ isActive }) => (isActive ? "blue" : "")}
             >
               Home

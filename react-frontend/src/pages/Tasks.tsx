@@ -1,6 +1,6 @@
 import React from "react";
 import "../App.css";
-import Loader from "./Loader";
+import Loader from "../components/Loader";
 
 type TasksProps = {
   tasks: {
